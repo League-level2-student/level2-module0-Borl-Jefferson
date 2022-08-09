@@ -27,7 +27,7 @@ public class _00_ArrayCheatSheet {
 	   }
 		
 		//6. make an array of 50 integers
-	   //Sike, do 10, this is part of the original unedited version
+	   //sike, do 10, this is part of the original unedited version
 		int []b = new int[10];
 		//7. use a for loop to make every value of the integer array a random number
 		for (int j=0; 10>j; j++) {
