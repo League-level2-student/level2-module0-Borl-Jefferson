@@ -19,23 +19,23 @@ public class _01_RobotRace {
 		int preflingy = 0;
 		// 2. create an array of 5 robots.
 		// okay
-		Robot[] randy = new Robot[5];
+		Robot[] rob = new Robot[5];
 		// 3. use a for loop to initialize the robots.
 		for (int i = 0; i < 5; i++) {
-			randy[i] = new Robot();
-			randy[i].setX(i * 50 + 50);
-			randy[i].setY(500);
-			randy[i].setSpeed(10);
+			rob[i] = new Robot();
+			rob[i].setX(i * 100 + 300);
+			rob[i].setY(500);
+			rob[i].setSpeed(10);
 
 		}
 		// 4. make each robot start at the bottom of the screen, side by side, facing up
-		int[] finish = new int[randy.length];
+		int[] finish = new int[rob.length];
 		// 5. use another for loop to iterate through the array and make each robot move
 
 // a random amount less than 50.
 		while (progress == true) {
-			for (int k = 0; k < randy.length; k++) {
-				if (randy[k].getY() > 0) {
+			for (int k = 0; k < rob.length; k++) {
+				if (rob[k].getY() > 0) {
 					progress = true;
 
 				} else {
@@ -54,9 +54,12 @@ public class _01_RobotRace {
 					//
 				}
 			}
-			for (int j = 0; j < randy.length; j++) {
+			for (int j = 0; j < rob.length; j++) {
 				rand = r.nextInt(50);
-				randy[j].move(rand);
+				int y2 = rand;
+				int x2 = j;
+				Thread go = new Thread(() -> rob[x2].move(y2));
+				go.start();
 			}
 			// make if race in progress, boolean = true if all are above y level 0
 
