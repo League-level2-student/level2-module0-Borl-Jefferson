@@ -1,6 +1,7 @@
 package arrays;
 
 import java.awt.Color;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -8,77 +9,32 @@ import javax.swing.JOptionPane;
 import org.jointheleague.graphical.robot.Robot;
 
 public class _01_RobotRace {
-	// 1. make a main method
+
+	Racer[] robs = new Racer[5];
+	boolean isrunning=true;
+
 	public static void main(String[] args) {
-		Random r = new Random();
-		int rand;
-		boolean progress = true;
-		boolean stop = false;
-		int winners = 0;
-		int preflingx = 0;
-		int preflingy = 0;
-		// 2. create an array of 5 robots.
-		// okay
-		Robot[] rob = new Robot[5];
-		// 3. use a for loop to initialize the robots.
-		for (int i = 0; i < 5; i++) {
-			rob[i] = new Robot();
-			rob[i].setX(i * 100 + 300);
-			rob[i].setY(500);
-			rob[i].setSpeed(10);
 
-		}
-		// 4. make each robot start at the bottom of the screen, side by side, facing up
-		int[] finish = new int[rob.length];
-		// 5. use another for loop to iterate through the array and make each robot move
-
-// a random amount less than 50.
-		while (progress == true) {
-			for (int k = 0; k < rob.length; k++) {
-				if (rob[k].getY() > 0) {
-					progress = true;
-
-				} else {
-					stop = true;
-
-					//
-					JOptionPane.showMessageDialog(null, "Racer " + (k + 1) + " won the race!");
-					progress = false;
-					break;
-
-					//
-
-					// run a party method
-					//
-					//
-					//
-				}
-			}
-			for (int j = 0; j < rob.length; j++) {
-				rand = r.nextInt(50);
-				int y2 = rand;
-				int x2 = j;
-				Thread go = new Thread(() -> rob[x2].move(y2));
-				go.start();
-			}
-			// make if race in progress, boolean = true if all are above y level 0
-
-		}
-
-		// 6. use a while loop to repeat step 5 until a robot has reached the top of the
-		// screen.
-
-		// 7. declare that robot the winner and throw it a party!
-
-		// 8. try different races with different amounts of robots.
-
-		// 9. make the robots race around a circular track.
-
-		party();
+		_01_RobotRace rr = new _01_RobotRace();
+		rr.race();
 	}
 
-	public static void party() {
-		for (int i = 0; i < 9999; i++) {
+	public void race() {
+		for (int j = 0; j < robs.length; j++) {
+robs[j] = new Racer(j);
+			robs[j].start();
+		}
+	}
+
+	public void party(int winner) {
+		for (int i = 0; i < robs.length; i++) {
+			if (robs[i] != robs[winner]) {
+				isrunning=false;
+			}
+		}
+		JOptionPane.showMessageDialog(null, "Racer " + (winner + 1) + " won the race!");
+
+		/*for (int i = 0; i < 9999; i++) {
 			Robot.setWindowColor(Color.RED);
 			delay();
 			Robot.setWindowColor(Color.ORANGE);
@@ -91,9 +47,10 @@ public class _01_RobotRace {
 			delay();
 			Robot.setWindowColor(Color.MAGENTA);
 			delay();
-		}
+		}*/
 
 	}
+
 	public static void delay() {
 		try {
 			Thread.sleep(50);
@@ -102,5 +59,32 @@ public class _01_RobotRace {
 			e.printStackTrace();
 		}
 	}
-}
 
+	public class Racer extends Thread {
+		private int j;
+
+		public Racer(int j) {
+			this.j = j;
+		}
+
+		public void run() {
+			Random r = new Random();
+			int rand = r.nextInt(50)+5;
+			Robot rob = new Robot();
+			rob.setX(j * 100 + 300);
+			rob.setY(500);
+			rob.setSpeed(10);
+
+			while (rob.getY() > 0) {
+				if(isrunning) {
+				rob.move(rand);
+				}else {
+					return;
+				}
+			}
+			party(j);
+
+		}
+
+	}
+}
