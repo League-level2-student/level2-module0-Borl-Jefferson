@@ -61,7 +61,7 @@ robs[j] = new Racer(j);
 
 		public Racer(int j) {
 			this.j = j;
-		}
+		} 
 		Robot rob;
 		public void run() {
 			Random r = new Random();
