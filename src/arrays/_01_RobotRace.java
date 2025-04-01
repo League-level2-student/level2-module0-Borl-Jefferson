@@ -12,6 +12,7 @@ public class _01_RobotRace {
 
 	Racer[] robs = new Racer[5];
 	boolean isrunning=true;
+	boolean won = false;
 
 	public static void main(String[] args) {
 
@@ -30,9 +31,12 @@ robs[j] = new Racer(j);
 		for (int i = 0; i < robs.length; i++) {
 			if (robs[i] != robs[winner]) {
 				isrunning=false;
+				robs[i].interrupt();
+				
 			}
 		}
 		JOptionPane.showMessageDialog(null, "Racer " + (winner + 1) + " won the race!");
+		
 
 		/*for (int i = 0; i < 9999; i++) {
 			Robot.setWindowColor(Color.RED);
@@ -51,14 +55,6 @@ robs[j] = new Racer(j);
 
 	}
 
-	public static void delay() {
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public class Racer extends Thread {
 		private int j;
@@ -66,11 +62,11 @@ robs[j] = new Racer(j);
 		public Racer(int j) {
 			this.j = j;
 		}
-
+		Robot rob;
 		public void run() {
 			Random r = new Random();
 			int rand = r.nextInt(50)+5;
-			Robot rob = new Robot();
+			rob = new Robot();
 			rob.setX(j * 100 + 300);
 			rob.setY(500);
 			rob.setSpeed(10);
@@ -82,9 +78,16 @@ robs[j] = new Racer(j);
 					return;
 				}
 			}
+			if(isrunning) {
+				
 			party(j);
+				
+				
+			}
 
 		}
+
+
 
 	}
 }
